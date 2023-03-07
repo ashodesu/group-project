@@ -1,4 +1,4 @@
-import 'package:asm/app/landing.dart';
+import 'package:asm/app/login.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,7 +10,7 @@ class AppRouter extends StatelessWidget {
           routes: [
             GoRoute(
               path: '/',
-              builder: (context, state) => Landing(),
+              builder: (context, state) => Login(),
             ),
           ],
         ),
