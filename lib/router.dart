@@ -1,4 +1,6 @@
+import 'package:asm/app/main/main.dart';
 import 'package:asm/app/login.dart';
+import 'package:asm/app/main/submit_record.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -11,6 +13,18 @@ class AppRouter extends StatelessWidget {
             GoRoute(
               path: '/',
               builder: (context, state) => Login(),
+              routes: [
+                GoRoute(
+                  path: 'home',
+                  builder: (context, state) => MainPage(),
+                  routes: [
+                    GoRoute(
+                      path: 'submit',
+                      builder: (context, state) => SubmitRecord(),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

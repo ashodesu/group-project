@@ -14,10 +14,13 @@ class Login extends StatelessWidget {
           Image.asset('assets/images/logo.png'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
                 "Login",
-                style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: 36,
+                  fontFamily: fontStyle,
+                ),
               ),
             ],
           ),
@@ -51,9 +54,13 @@ class Login extends StatelessWidget {
                 onPressed: null,
                 height: screenHeight * 0.04,
                 width: screenWidth * 0.04,
-                child: const Text(
+                child: Text(
                   "Regist",
-                  style: TextStyle(color: black, fontSize: 20),
+                  style: TextStyle(
+                    color: black,
+                    fontSize: 20,
+                    fontFamily: fontStyle,
+                  ),
                 ),
               ),
               SizedBox(width: screenWidth * 0.025),
@@ -63,16 +70,20 @@ class Login extends StatelessWidget {
                 },
                 height: screenHeight * 0.04,
                 width: screenWidth * 0.04,
-                child: const Text(
+                child: Text(
                   "Login",
-                  style: TextStyle(color: black, fontSize: 20),
+                  style: TextStyle(
+                    color: black,
+                    fontSize: 20,
+                    fontFamily: fontStyle,
+                  ),
                 ),
               ),
             ],
           ),
           TextButton(
             onPressed: () {
-              context.go('home');
+              context.go('/home');
             },
             child: const Text(
               'Login Later',

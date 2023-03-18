@@ -11,3 +11,6 @@ const blue = Colors.blue;
 //Screen Size
 final double screenWidth = WidgetsBinding.instance.window.physicalSize.height;
 final double screenHeight = WidgetsBinding.instance.window.physicalSize.width;
+
+//Font
+final String fontStyle = "JotiOne";
