@@ -1,6 +1,6 @@
-import 'package:asm/app/main/database.dart';
-import 'package:asm/app/main/home.dart';
-import 'package:asm/app/main/user.dart';
+import 'package:asm/app/ui/main/database.dart';
+import 'package:asm/app/ui/main/home.dart';
+import 'package:asm/app/ui/main/user.dart';
 import 'package:asm/config_app.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';

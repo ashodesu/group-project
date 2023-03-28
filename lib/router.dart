@@ -1,6 +1,6 @@
-import 'package:asm/app/main/main.dart';
-import 'package:asm/app/login.dart';
-import 'package:asm/app/main/submit_record.dart';
+import 'package:asm/app/ui/login.dart';
+import 'package:asm/app/ui/main/main.dart';
+import 'package:asm/app/ui/submit_record/submit_record.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
