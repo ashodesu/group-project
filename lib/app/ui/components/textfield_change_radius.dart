@@ -1,47 +1,36 @@
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
 
-class TextFieldSquare extends StatelessWidget {
-  final Function(String? val)? onChanged;
+class TextFieldRadiusToSquare extends StatelessWidget {
+  final Function(String)? onChanged;
   final Function(String?)? onSaved;
   final String? labelText;
   final String? hintText;
   final String? Function(Object?)? validate;
   final bool? hideText;
-  final bool? readOnly;
+  final bool? autocorrect;
   final TextEditingController? controller;
-  final Function()? onTap;
-  final String? prefixText;
-  final Widget? suffixIcon;
-  final String? initialValue;
 
-  const TextFieldSquare({
+  const TextFieldRadiusToSquare({
     super.key,
     this.onChanged,
-    this.onSaved,
+    required this.onSaved,
     this.labelText,
     this.hintText,
     this.validate,
     this.hideText,
-    this.readOnly,
+    this.autocorrect,
     this.controller,
-    this.onTap,
-    this.prefixText,
-    this.suffixIcon,
-    this.initialValue,
   });
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: initialValue,
-      controller: controller,
       onChanged: onChanged,
       onSaved: onSaved,
       textAlign: TextAlign.center,
       obscureText: hideText ?? false,
       validator: validate,
-      readOnly: readOnly ?? false,
-      onTap: onTap,
+      controller: controller,
 
       //Text Style
       style: const TextStyle(fontSize: 20),
@@ -51,7 +40,7 @@ class TextFieldSquare extends StatelessWidget {
         labelText: labelText,
         labelStyle: const TextStyle(
           textBaseline: TextBaseline.alphabetic,
-          color: grey,
+          color: black,
           fontWeight: FontWeight.bold,
           fontSize: 16,
         ),
@@ -60,21 +49,21 @@ class TextFieldSquare extends StatelessWidget {
         filled: true,
         fillColor: white,
         enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
           borderSide: BorderSide(
-            color: grey,
+            color: black,
             width: 2,
           ),
         ),
         focusedBorder: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(
-            color: grey,
+            color: black,
             width: 2,
           ),
         ),
         errorBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
+          borderRadius: BorderRadius.all(Radius.circular(30)),
           borderSide: BorderSide(
             color: red,
             width: 2,
@@ -90,9 +79,8 @@ class TextFieldSquare extends StatelessWidget {
         isDense: true,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-        prefixText: prefixText,
-        suffixIcon: suffixIcon,
       ),
+      autocorrect: autocorrect ?? true,
     );
   }
 }

@@ -1,4 +1,5 @@
-import 'package:asm/components/top_bar_app.dart';
+import 'package:asm/app/ui/components/database_card.dart';
+import 'package:asm/app/ui/components/top_bar_app.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -13,12 +14,7 @@ class Database extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  for (int i = 0; i <= 200; i++) ...[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Text(i.toString())],
-                    ),
-                  ]
+                  DatabaseCard(),
                 ],
               ),
             ),

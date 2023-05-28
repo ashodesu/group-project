@@ -18,7 +18,6 @@ class _MainPageState extends State<MainPage> {
     Widget body = const Center(
       child: Text("Error: Something wrong"),
     );
-    print(bodyName);
     if (bodyName == "home") {
       body = Home();
     } else if (bodyName == "db") {
@@ -60,9 +59,11 @@ class _MainPageState extends State<MainPage> {
               iconSize: iconSize,
               icon: Image.asset('assets/images/icon_user.png'),
               onPressed: () {
-                setState(() {
-                  bodyName = "user";
-                });
+                setState(
+                  () {
+                    bodyName = "user";
+                  },
+                );
               },
             ),
           ],

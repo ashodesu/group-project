@@ -1,4 +1,6 @@
-import 'package:asm/obj/locate.dart';
+import 'dart:io';
+
+import 'package:asm/app/core/obj/locate.dart';
 
 class Record {
   int step = 1;
@@ -8,4 +10,5 @@ class Record {
   String? startingTime;
   String? details;
   String? typeOfBird;
+  List<File> imageList = [];
 }

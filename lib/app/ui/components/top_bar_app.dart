@@ -38,15 +38,10 @@ class TopBar extends StatelessWidget {
                   style: TextStyle(fontSize: 28, fontFamily: fontStyle),
                 ),
               ] else if (title == 'User') ...[
-                const SizedBox(width: 50),
                 Text(
                   title,
                   style: TextStyle(fontSize: 28, fontFamily: fontStyle),
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Image.asset('assets/images/icon_setting.png'),
-                )
               ] else ...[
                 IconButton(
                   onPressed: () {

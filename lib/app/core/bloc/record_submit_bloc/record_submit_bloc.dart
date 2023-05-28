@@ -1,8 +1,7 @@
-import 'package:asm/app/core/service/submit_service.dart';
-import 'package:asm/obj/record.dart';
+import 'dart:io';
+import 'package:asm/app/core/obj/record.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 part 'record_submit_event.dart';
 part 'record_submit_state.dart';
 
@@ -24,6 +23,12 @@ class RecordSubmitBloc extends Bloc<RecordSubmitEvent, RecordSubmitState> {
           emit(StepChanged(record: record));
         }
         emit(StepChangeError());
+      },
+    );
+    on<AddPhoto>(
+      (event, emit) {
+        emit(PhotoUpdate(record: event.record));
+        emit(PhotoUpdated());
       },
     );
   }

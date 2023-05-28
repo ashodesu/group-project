@@ -40,6 +40,10 @@ dependencies:
   flutter_bloc: ^8.1.2
   equatable: ^2.0.5
   intl: ^0.18.0
+  image_picker: ^0.8.7+1
+  remixicon: ^1.0.0
+  http: ^0.13.5
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:

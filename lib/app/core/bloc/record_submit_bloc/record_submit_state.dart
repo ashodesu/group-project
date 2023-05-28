@@ -19,3 +19,14 @@ class StepChanged extends RecordSubmitState {
 }
 
 class StepChangeError extends RecordSubmitState {}
+
+class PhotoUpdate extends RecordSubmitState {
+  final Record record;
+
+  @override
+  List<Object> get props => [record.imageList];
+
+  const PhotoUpdate({required this.record});
+}
+
+class PhotoUpdated extends RecordSubmitState {}

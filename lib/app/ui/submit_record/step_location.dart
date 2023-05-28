@@ -1,8 +1,8 @@
 import 'package:asm/app/core/bloc/record_submit_bloc/record_submit_bloc.dart';
-import 'package:asm/components/button_square.dart';
-import 'package:asm/components/dropdown_field.dart';
-import 'package:asm/components/textfield_square.dart';
-import 'package:asm/obj/record.dart';
+import 'package:asm/app/ui/components/button_square.dart';
+import 'package:asm/app/ui/components/dropdown_field.dart';
+import 'package:asm/app/ui/components/textfield_square.dart';
+import 'package:asm/app/core/obj/record.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
 

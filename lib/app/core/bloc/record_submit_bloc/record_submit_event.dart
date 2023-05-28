@@ -10,11 +10,17 @@ abstract class RecordSubmitEvent extends Equatable {
 class NextStep extends RecordSubmitEvent {
   final Record record;
 
-  NextStep({required this.record});
+  const NextStep({required this.record});
 }
 
 class PreviousStep extends RecordSubmitEvent {
   final Record record;
 
-  PreviousStep({required this.record});
+  const PreviousStep({required this.record});
+}
+
+class AddPhoto extends RecordSubmitEvent {
+  final Record record;
+
+  const AddPhoto({required this.record});
 }
