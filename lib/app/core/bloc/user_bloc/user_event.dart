@@ -8,3 +8,13 @@ abstract class UserEvent extends Equatable {
 }
 
 class GetUserInfo extends UserEvent {}
+
+class ChangeUserInfo extends UserEvent {}
+
+class UpdateUserInfo extends UserEvent {
+  final UserInfo userInfo;
+
+  UpdateUserInfo({required this.userInfo});
+}
+
+class Logout extends UserEvent {}

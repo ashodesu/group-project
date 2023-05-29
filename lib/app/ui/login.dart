@@ -166,7 +166,6 @@ class Login extends StatelessWidget {
   }
 
   showAlertDialog(BuildContext context) {
-    // set up the button
     Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {
@@ -174,7 +173,6 @@ class Login extends StatelessWidget {
       },
     );
 
-    // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Login Failed"),
       content: Text("Username or Password not correct!\nPlease try again."),
@@ -183,7 +181,6 @@ class Login extends StatelessWidget {
       ],
     );
 
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {

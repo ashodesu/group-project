@@ -12,24 +12,48 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   HttpService httpService = HttpService();
   UserBloc() : super(UserInitial()) {
     on<GetUserInfo>((event, emit) async {
-      String token = await storageService.getToken();
-      Map response = await httpService.getUserInfo(token);
-      if (response['id'] != null && response['id'] != "") {
-        UserInfo info = UserInfo();
-        info.id = response['id'];
-        info.userName = response['username'];
-        info.email = response['email'];
-        info.createAt = DateTime.tryParse(response['createdAt'])!.toLocal();
-        info.updateAt = DateTime.tryParse(response['updatedAt'])!.toLocal();
-        info.firstName = response['firstName'];
-        info.lastName = response['lastName'];
-        if (response['birthday'] != null) {
-          info.birthday = DateTime.tryParse(response['birthday'])!.toLocal();
+      try {
+        String token = await storageService.getToken();
+        Map response = await httpService.getUserInfo(token);
+        if (response['id'] != null &&
+            response['id'] != "" &&
+            response['error'] == null) {
+          print('in');
+          UserInfo info = UserInfo();
+          info.id = response['id'];
+          info.userName = response['username'];
+          info.email = response['email'];
+          info.createAt = DateTime.tryParse(response['createdAt'])!.toLocal();
+          info.updateAt = DateTime.tryParse(response['updatedAt'])!.toLocal();
+          info.firstName = response['firstName'];
+          info.lastName = response['lastName'];
+          info.birthday = response['birthday'];
+          Map postRe = await httpService.getUserPost(token);
+          if (postRe['meta']['pagination']['total'] != null) {
+            info.postCount = postRe['meta']['pagination']['total'];
+          }
+          emit(GetInfoSuccess(userInfo: info));
+        } else {
+          emit(GetInfoFailed());
         }
-        emit(GetInfoSuccess(userInfo: info));
-      } else {
+      } catch (e) {
         emit(GetInfoFailed());
       }
     });
+    on<UpdateUserInfo>((event, emit) async {
+      String token = await storageService.getToken();
+      Map res = await httpService.updateUserInfo(token, event.userInfo);
+      if (res['error'] == null) {
+        emit(UpdateInfoSuccess());
+      } else {
+        emit(UpdateInfoFailed());
+      }
+    });
+    on<Logout>(
+      (event, emit) {
+        storageService.clearToken();
+        emit(LogoutSuccess());
+      },
+    );
   }
 }

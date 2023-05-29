@@ -4,7 +4,8 @@ class UserInfo {
   String? email;
   String? firstName;
   String? lastName;
-  DateTime? birthday;
+  String? birthday;
   DateTime? createAt;
   DateTime? updateAt;
+  int? postCount;
 }

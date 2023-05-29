@@ -1,11 +1,13 @@
+import 'package:asm/app/core/bloc/database_bloc/database_bloc.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar({super.key, required this.title});
+  const TopBar({super.key, required this.title, this.databaseBloc});
 
   final String title;
+  final DatabaseBloc? databaseBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,9 @@ class TopBar extends StatelessWidget {
                 style: TextStyle(fontSize: 20),
                 textInputAction: TextInputAction.search,
                 onSubmitted: (value) {
-                  print("Submitted");
+                  if (value != null) {
+                    databaseBloc!.add(SearchDatabase(value, true));
+                  }
                 },
               ),
             ),

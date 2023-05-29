@@ -1,7 +1,7 @@
 import 'package:asm/app/core/bloc/record_submit_bloc/record_submit_bloc.dart';
-import 'package:asm/app/ui/submit_record/step_content.dart';
-import 'package:asm/app/ui/submit_record/step_datetime.dart';
-import 'package:asm/app/ui/submit_record/step_location.dart';
+import 'package:asm/app/ui/sub/submit_record/step_content.dart';
+import 'package:asm/app/ui/sub/submit_record/step_datetime.dart';
+import 'package:asm/app/ui/sub/submit_record/step_location.dart';
 import 'package:asm/app/ui/components/button_square.dart';
 import 'package:asm/app/ui/components/dropdown_field.dart';
 import 'package:asm/app/ui/components/textfield_square.dart';

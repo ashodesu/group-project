@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:asm/app/core/obj/user_info.dart';
 import 'package:asm/config.dart';
 import 'package:asm/app/core/obj/login_info.dart';
 import 'package:http/http.dart' as http;
@@ -8,11 +9,17 @@ import 'package:http/http.dart' as http;
 abstract class HttpService {
   FutureOr userLogin(LoginInfo loginInfo);
   FutureOr getUserInfo(String token);
+  FutureOr getUserPost(String token);
+  FutureOr updateUserInfo(String token, UserInfo info);
+  FutureOr getDatabaseInfo(int page, int pageSize);
+  FutureOr searchDatabase(String keywords);
+  // FutureOr getRecord();
   factory HttpService() => _HttpService();
 }
 
 class _HttpService implements HttpService {
   final HttpConfig config = HttpConfig();
+
   @override
   FutureOr userLogin(LoginInfo loginInfo) async {
     Map jsonMap = {
@@ -41,6 +48,61 @@ class _HttpService implements HttpService {
     Map body = jsonDecode(response.body);
     return body;
   }
-}
 
-checkKeyExpiry(String auth) {}
+  @override
+  Future<FutureOr> getUserPost(String token) async {
+    http.Response response = await http.get(
+      Uri.parse("${config.host}${config.postCounter}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    Map body = jsonDecode(response.body);
+    return body;
+  }
+
+  @override
+  Future<FutureOr> updateUserInfo(String token, UserInfo info) async {
+    Map body = {
+      "id": info.id,
+      "username": info.userName,
+      "email": info.email,
+      "firstName": info.firstName,
+      "lastName": info.lastName,
+      "birthday": info.birthday,
+    };
+    http.Response response = await http.put(
+      Uri.parse("${config.host}${config.changeUserInfo}${info.id}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(body),
+    );
+    Map res = jsonDecode(response.body);
+    return res;
+  }
+
+  @override
+  FutureOr getDatabaseInfo(int page, int pageSize) async {
+    http.Response response = await http.get(
+      Uri.parse(
+          "${config.host}${config.database}?pagination[page]=$page&pagination[pageSize]=$pageSize&populate=*"),
+    );
+    Map res = jsonDecode(response.body);
+    return res;
+  }
+
+  @override
+  FutureOr searchDatabase(String keywords) async {
+    http.Response response = await http.get(
+      Uri.parse(
+          "${config.host}${config.database}?populate=*&filters[\$or][0][creatureName][\$contains]=$keywords&filters[\$or][1][creatureSciName][\$contains]=$keywords"),
+    );
+    Map res = jsonDecode(response.body);
+    return res;
+  }
+}

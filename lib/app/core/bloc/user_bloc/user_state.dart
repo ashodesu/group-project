@@ -16,3 +16,9 @@ class GetInfoSuccess extends UserState {
 }
 
 class GetInfoFailed extends UserState {}
+
+class UpdateInfoSuccess extends UserState {}
+
+class UpdateInfoFailed extends UserState {}
+
+class LogoutSuccess extends UserState {}

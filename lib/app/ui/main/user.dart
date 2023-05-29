@@ -20,8 +20,8 @@ class User extends StatelessWidget {
           if (state is GetInfoSuccess) {
             info = state.userInfo;
           }
-          if (state is GetInfoFailed) {
-            context.go('/');
+          if (state is LogoutSuccess) {
+            context.pop();
           }
         },
         builder: (context, state) {
@@ -51,7 +51,7 @@ class User extends StatelessWidget {
                             height: screenHeight * 0.05,
                             width: screenWidth,
                             child: Text(
-                              'My Record',
+                              'My Record(${info.postCount})',
                               style: TextStyle(
                                 fontFamily: fontStyle,
                                 fontSize: 24,
@@ -86,7 +86,7 @@ class User extends StatelessWidget {
                                 children: [
                                   Text(
                                     'First Name: ${info.firstName}\n\nLast Name: ${info.lastName}\n\nEmail: ${info.email}\n\nBirthday: ${info.birthday}\n\nCreate At: ${info.createAt}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -97,7 +97,9 @@ class User extends StatelessWidget {
                           ),
                           const SizedBox(height: 24),
                           SquareButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.push('/user/change-info');
+                            },
                             height: screenHeight * 0.04,
                             width: screenWidth * 0.07,
                             child: Text(
@@ -112,6 +114,18 @@ class User extends StatelessWidget {
                             width: screenWidth * 0.07,
                             child: Text(
                               'Change Password',
+                              style: TextStyle(fontFamily: fontStyle),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          SquareButton(
+                            onPressed: () {
+                              bloc.add(Logout());
+                            },
+                            height: screenHeight * 0.04,
+                            width: screenWidth * 0.07,
+                            child: Text(
+                              'Logout',
                               style: TextStyle(fontFamily: fontStyle),
                             ),
                           ),
