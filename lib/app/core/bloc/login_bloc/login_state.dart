@@ -25,3 +25,7 @@ class RegistFailed extends LoginState {
   List<Object> get props => [msg];
   RegistFailed(this.msg);
 }
+
+class Logined extends LoginState {}
+
+class HaventLogin extends LoginState {}

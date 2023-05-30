@@ -44,5 +44,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             "!!!Unknow Error Please Contact Admin!!!\nError Code:\n${e.toString()}"));
       }
     });
+    on<CheckLogin>(
+      (event, emit) async {
+        try {
+          String? token = await storageService.getToken();
+          if (token != null && token != "") {
+            Map res = await httpService.getUserInfo(token);
+            if (res['error'] == null && res['data'] != null) {
+              emit(Logined());
+            }
+          }
+        } catch (e) {
+          emit(HaventLogin());
+        }
+      },
+    );
   }
 }

@@ -41,7 +41,8 @@ class Login extends StatelessWidget {
           BlocConsumer<LoginBloc, LoginState>(
             bloc: bloc,
             listener: (context, state) {
-              if (state is LoginSuccess) {
+              if (state is LoginInitial) {}
+              if (state is LoginSuccess || state is Logined) {
                 if (mode == null || mode == false) {
                   context.go('/home');
                 }
@@ -53,7 +54,7 @@ class Login extends StatelessWidget {
                 controller1.clear();
                 controller2.clear();
                 info = LoginInfo();
-                showAlertDialog(context);
+                showAlertDialog(context, state.msg);
               }
             },
             builder: (context, state) {
@@ -167,7 +168,7 @@ class Login extends StatelessWidget {
     );
   }
 
-  showAlertDialog(BuildContext context) {
+  showAlertDialog(BuildContext context, String msg) {
     Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {
@@ -177,7 +178,7 @@ class Login extends StatelessWidget {
 
     AlertDialog alert = AlertDialog(
       title: Text("Login Failed"),
-      content: Text("Username or Password not correct!\nPlease try again."),
+      content: Text(msg),
       actions: [
         okButton,
       ],

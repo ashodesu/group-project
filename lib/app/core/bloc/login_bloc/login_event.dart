@@ -17,3 +17,5 @@ class UserRegist extends LoginEvent {
 
   UserRegist(this.info);
 }
+
+class CheckLogin extends LoginEvent {}
