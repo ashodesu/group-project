@@ -36,9 +36,9 @@ class TopBar extends StatelessWidget {
                   onPressed: () async {
                     String? token = await storageService.getToken();
                     if (token != null) {
-                      context.push('/home/submit');
+                      context.push('/submit');
                     } else {
-                      context.pop();
+                      context.push('/login');
                     }
                   },
                   icon: Image.asset('assets/images/icon_add.png'),

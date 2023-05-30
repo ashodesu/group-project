@@ -26,7 +26,9 @@ class SubmitRecord extends StatelessWidget {
             child: BlocConsumer<RecordSubmitBloc, RecordSubmitState>(
               bloc: bloc,
               buildWhen: (previous, current) =>
-                  current is StepChanged || current != previous,
+                  current is StepChanged ||
+                  current is ImportSuccess ||
+                  current != previous,
               listener: (context, state) {
                 if (state is StepChanged) {
                   record = state.record;
@@ -40,14 +42,31 @@ class SubmitRecord extends StatelessWidget {
                 if (state is SubmitDataFailed) {
                   showAlertDialog(context, state.msg);
                 }
+                if (state is ExportSuccess) {
+                  showExportAlertDialog(context, state.msg);
+                }
+                if (state is ExportFailed) {
+                  showExportAlertDialog(context, state.msg);
+                }
+                if (state is ImportSuccess) {
+                  showExportAlertDialog(context, state.msg);
+                }
+                if (state is ImportFailed) {
+                  showExportAlertDialog(context, state.msg);
+                }
               },
               builder: (context, state) {
+                print("rebuild");
                 if (state is GetInitDataSuccess) {
                   birdTypeList = state.dataList;
                 }
                 if (state is RecordSubmitInitial) {
                   bloc.add(GetInitData());
                 }
+                if (state is ImportSuccess) {
+                  record = state.record;
+                }
+                print(record.locate.area);
                 return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -100,6 +119,29 @@ class SubmitRecord extends StatelessWidget {
     AlertDialog alert = AlertDialog(
       title: Text("Submit Failed"),
       content: Text(msg),
+      actions: [
+        okButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showExportAlertDialog(BuildContext context, String msg) {
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        context.pop();
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(msg),
       actions: [
         okButton,
       ],

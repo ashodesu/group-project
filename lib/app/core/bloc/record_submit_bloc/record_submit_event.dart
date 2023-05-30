@@ -35,6 +35,13 @@ class SubmitData extends RecordSubmitEvent {
 
 class ExportCSV extends RecordSubmitEvent {
   final Record data;
+  final String path;
 
-  ExportCSV(this.data);
+  ExportCSV(this.data, this.path);
+}
+
+class ImportCSV extends RecordSubmitEvent {
+  final FilePickerResult result;
+
+  ImportCSV(this.result);
 }

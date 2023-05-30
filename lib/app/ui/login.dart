@@ -43,7 +43,7 @@ class Login extends StatelessWidget {
             listener: (context, state) {
               if (state is LoginSuccess || state is Logined) {
                 if (mode == null || mode == false) {
-                  context.go('/home');
+                  context.pop();
                 }
                 if (mode == true) {
                   userBloc!.add(GetUserInfo());
@@ -144,24 +144,26 @@ class Login extends StatelessWidget {
                         ),
                       ],
                     ),
-                    TextButton(
-                      onPressed: () {
-                        if (mode == null || mode == false) {
-                          context.go('/home');
-                        }
-                        if (mode == true) {
-                          userBloc!.add(GetUserInfo());
-                        }
-                      },
-                      child: const Text(
-                        'Login Later',
-                        style: TextStyle(
-                          fontSize: 16,
-                          decoration: TextDecoration.underline,
-                          color: blue,
+                    if (!(mode ?? false)) ...[
+                      TextButton(
+                        onPressed: () {
+                          if (mode == null || mode == false) {
+                            context.go('/home');
+                          }
+                          if (mode == true) {
+                            userBloc!.add(GetUserInfo());
+                          }
+                        },
+                        child: const Text(
+                          'Login Later',
+                          style: TextStyle(
+                            fontSize: 16,
+                            decoration: TextDecoration.underline,
+                            color: blue,
+                          ),
                         ),
                       ),
-                    ),
+                    ]
                   ],
                 );
               }

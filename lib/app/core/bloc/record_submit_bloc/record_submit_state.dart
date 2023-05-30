@@ -54,3 +54,28 @@ class SubmitDataFailed extends RecordSubmitState {
 
   SubmitDataFailed(this.msg);
 }
+
+class ExportSuccess extends RecordSubmitState {
+  final String msg;
+
+  ExportSuccess(this.msg);
+}
+
+class ExportFailed extends RecordSubmitState {
+  final String msg;
+
+  ExportFailed(this.msg);
+}
+
+class ImportSuccess extends RecordSubmitState {
+  final String msg;
+  final Record record;
+
+  ImportSuccess(this.msg, this.record);
+}
+
+class ImportFailed extends RecordSubmitState {
+  final String msg;
+
+  ImportFailed(this.msg);
+}

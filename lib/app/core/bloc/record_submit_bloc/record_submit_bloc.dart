@@ -1,8 +1,13 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:asm/app/core/obj/record.dart';
 import 'package:asm/app/core/service/http_service.dart';
 import 'package:asm/app/core/service/storage_service.dart';
+import 'package:csv/csv.dart';
 import 'package:equatable/equatable.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 part 'record_submit_event.dart';
@@ -73,32 +78,63 @@ class RecordSubmitBloc extends Bloc<RecordSubmitEvent, RecordSubmitState> {
             "!!!Unkown Error Please Contact Admin!!!!\nError Code:\n${e.toString()}"));
       }
     });
-    on<ExportCSV>((event, emit) {
-      Record record = event.data;
-      List row = [
-        [
-          "Type Of Bird",
-          "Description",
-          "Observation Date",
-          "Appeared Time",
-          "Region",
-          "Area",
-          "District",
-          "Details",
-          "Photo"
-        ],
-        [
-          record.typeOfBird,
-          record.details,
-          DateFormat("dd/MM/yy").format(record.observationDate!),
-          record.startingTime,
-          record.locate.nation,
-          record.locate.area,
-          record.locate.district,
-          record.locate.details,
-          record.imageList.toString()
-        ]
-      ];
+    on<ExportCSV>((event, emit) async {
+      try {
+        Record record = event.data;
+        List<List> row = [
+          [
+            "Type Of Bird",
+            "Description",
+            "Observation Date",
+            "Appeared Time",
+            "Region",
+            "Area",
+            "District",
+            "Details",
+            "Photo"
+          ],
+          [
+            record.typeOfBird,
+            record.details,
+            DateFormat("dd/MM/yyyy").format(record.observationDate!),
+            record.startingTime,
+            record.locate.nation,
+            record.locate.area,
+            record.locate.district,
+            record.locate.details,
+            record.imageList!.path
+          ]
+        ];
+        File f = File(event.path + "/${record.typeOfBird}_Report.csv");
+        String csv = const ListToCsvConverter().convert(row);
+        f.writeAsString(csv);
+        emit(ExportSuccess("Export Success"));
+      } catch (e) {
+        print("Error: $e");
+        emit(ExportFailed("Export Filed"));
+      }
+    });
+    on<ImportCSV>((event, emit) async {
+      try {
+        File f = File(event.result.files.first.path!);
+        Record record = Record();
+        List<List> csv = CsvToListConverter().convert(await f.readAsString());
+        List data = csv[1];
+        record.step = 3;
+        record.typeOfBird = data[0];
+        record.details = data[1];
+        record.observationDate = DateFormat("dd/MM/yyyy").parse(data[2]);
+        record.startingTime = data[3];
+        record.locate.nation = data[4];
+        record.locate.area = data[5];
+        record.locate.district = data[6];
+        record.locate.details = data[7];
+        record.imageList = File(data[8]);
+        emit(ImportSuccess("Import Success", record));
+      } catch (e) {
+        print("Error: $e");
+        emit(ImportFailed("Import Failed"));
+      }
     });
   }
 }

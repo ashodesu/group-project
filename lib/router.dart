@@ -16,17 +16,15 @@ class AppRouter extends StatelessWidget {
           routes: [
             GoRoute(
               path: '/',
-              builder: (context, state) => Login(),
+              builder: (context, state) => MainPage(defaultBody: 'home'),
               routes: [
                 GoRoute(
-                  path: 'home',
-                  builder: (context, state) => MainPage(defaultBody: 'home'),
-                  routes: [
-                    GoRoute(
-                      path: 'submit',
-                      builder: (context, state) => SubmitRecord(),
-                    ),
-                  ],
+                  path: 'login',
+                  builder: (context, state) => Login(),
+                ),
+                GoRoute(
+                  path: 'submit',
+                  builder: (context, state) => SubmitRecord(),
                 ),
                 GoRoute(
                   path: 'change-info',

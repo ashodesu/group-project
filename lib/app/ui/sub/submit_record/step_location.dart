@@ -5,6 +5,7 @@ import 'package:asm/app/ui/components/button_square.dart';
 import 'package:asm/app/ui/components/textfield_square.dart';
 import 'package:asm/app/core/obj/record.dart';
 import 'package:asm/theme.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class LocationStep extends StatefulWidget {
@@ -117,32 +118,57 @@ class _LocationStepState extends State<LocationStep> {
             initialValue: widget.record.locate.nation,
           ),
           const SizedBox(height: 24),
-          SquareButton(
-            onPressed: () {
-              if (record.locate.area == null || record.locate.district == "") {
-                setState(() {
-                  errorText1 = "Please Select Area";
-                });
-              } else if (record.locate.district == null ||
-                  record.locate.district == "") {
-                errorText1 = "Please Select/Enter District";
-              } else {
-                errorText1 = "";
-              }
-              if (errorText1 == "") {
-                widget.bloc.add(NextStep(record: record));
-              }
-            },
-            height: screenHeight * 0.04,
-            width: screenWidth * 0.04,
-            child: Text(
-              "Next",
-              style: TextStyle(
-                fontFamily: fontStyle,
-                fontSize: 20,
-                color: black,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SquareButton(
+                onPressed: () async {
+                  final FilePickerResult? result =
+                      await FilePicker.platform.pickFiles();
+                  if (result != null) {
+                    widget.bloc.add(ImportCSV(result));
+                  }
+                },
+                height: screenHeight * 0.04,
+                width: screenWidth * 0.04,
+                child: Text(
+                  "Import CSV",
+                  style: TextStyle(
+                    fontFamily: fontStyle,
+                    fontSize: 20,
+                    color: black,
+                  ),
+                ),
               ),
-            ),
+              SquareButton(
+                onPressed: () {
+                  if (record.locate.area == null ||
+                      record.locate.district == "") {
+                    setState(() {
+                      errorText1 = "Please Select Area";
+                    });
+                  } else if (record.locate.district == null ||
+                      record.locate.district == "") {
+                    errorText1 = "Please Select/Enter District";
+                  } else {
+                    errorText1 = "";
+                  }
+                  if (errorText1 == "") {
+                    widget.bloc.add(NextStep(record: record));
+                  }
+                },
+                height: screenHeight * 0.04,
+                width: screenWidth * 0.04,
+                child: Text(
+                  "Next",
+                  style: TextStyle(
+                    fontFamily: fontStyle,
+                    fontSize: 20,
+                    color: black,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

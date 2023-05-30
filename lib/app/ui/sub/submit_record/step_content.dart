@@ -5,10 +5,10 @@ import 'package:asm/app/ui/components/button_square.dart';
 import 'package:asm/app/ui/components/textfield_square.dart';
 import 'package:asm/app/core/obj/record.dart';
 import 'package:asm/theme.dart';
-import 'package:file_selector/file_selector.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
 class ContentStep extends StatefulWidget {
   const ContentStep(
@@ -149,6 +149,25 @@ class _ContentStepState extends State<ContentStep> {
                 ),
               ),
               SquareButton(
+                onPressed: () async {
+                  final String? path =
+                      await FilePicker.platform.getDirectoryPath();
+                  if (path != null) {
+                    widget.bloc.add(ExportCSV(recordWrite, path));
+                  }
+                },
+                height: screenHeight * 0.04,
+                width: screenWidth * 0.04,
+                child: Text(
+                  "Export CSV",
+                  style: TextStyle(
+                    fontFamily: fontStyle,
+                    fontSize: 20,
+                    color: black,
+                  ),
+                ),
+              ),
+              SquareButton(
                 onPressed: () {
                   if (recordWrite.photoPath == null) {
                     setState(() {
@@ -179,25 +198,6 @@ class _ContentStepState extends State<ContentStep> {
               ),
             ],
           ),
-          Row(
-            children: [
-              SquareButton(
-                onPressed: () async {
-                  final String? path = await getSavePath();
-                },
-                height: screenHeight * 0.04,
-                width: screenWidth * 0.04,
-                child: Text(
-                  "Export CSV",
-                  style: TextStyle(
-                    fontFamily: fontStyle,
-                    fontSize: 20,
-                    color: black,
-                  ),
-                ),
-              ),
-            ],
-          )
         ],
       ),
     );

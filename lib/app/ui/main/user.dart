@@ -21,12 +21,6 @@ class User extends StatelessWidget {
           if (state is GetInfoSuccess) {
             info = state.userInfo;
           }
-          if (state is LogoutSuccess) {
-            context.pop();
-          }
-          if (state is GetInfoFailed) {
-            context.pop();
-          }
         },
         builder: (context, state) {
           if (state is GetInfoSuccess) {
@@ -142,6 +136,9 @@ class User extends StatelessWidget {
                 ),
               ],
             );
+          }
+          if (state is GetInfoFailed || state is LogoutSuccess) {
+            return Login(mode: true, userBloc: bloc);
           }
           if (state is ShowMyRecord) {
             return MyRecord(bloc: bloc, info: info);
