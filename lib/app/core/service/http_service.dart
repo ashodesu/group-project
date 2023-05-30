@@ -22,6 +22,8 @@ abstract class HttpService {
   FutureOr uploadPhoto(String token, File file, String name);
   FutureOr submitReport(String token, Record data, int userId);
   FutureOr removeReport(String token, int reportId);
+  FutureOr getAllReportWithBirdType(String birdType);
+  FutureOr getDataWithName(String birdType);
   factory HttpService() => _HttpService();
 }
 
@@ -225,6 +227,26 @@ class _HttpService implements HttpService {
         'Authorization': 'Bearer $token',
       },
       body: jsonEncode(body),
+    );
+    Map res = jsonDecode(response.body);
+    return res;
+  }
+
+  @override
+  FutureOr getAllReportWithBirdType(String birdType) async {
+    http.Response response = await http.get(
+      Uri.parse(
+          "${config.host}${config.report}?filters[BirdName][\$eq]=$birdType&filters[IsVisible][\$eq]=true&sort[0]=createdAt%3Adesc&populate=*"),
+    );
+    Map res = jsonDecode(response.body);
+    return res;
+  }
+
+  @override
+  Future<FutureOr> getDataWithName(String birdType) async {
+    http.Response response = await http.get(
+      Uri.parse(
+          "${config.host}${config.database}?populate=*&filters[creatureName][\$eq]=$birdType"),
     );
     Map res = jsonDecode(response.body);
     return res;

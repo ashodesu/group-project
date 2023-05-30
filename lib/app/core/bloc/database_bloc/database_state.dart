@@ -24,8 +24,10 @@ class ShowDetails extends DatabaseState {
   final DatabaseObject data;
   final ScrollController scrollController;
   final double scrollOffset;
+  final List<Record>? dataList;
 
-  ShowDetails(this.data, this.scrollController, this.scrollOffset);
+  ShowDetails(
+      this.data, this.scrollController, this.scrollOffset, this.dataList);
 }
 
 class ShowDatabase extends DatabaseState {}

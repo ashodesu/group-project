@@ -1,5 +1,6 @@
 import 'package:asm/app/core/bloc/database_bloc/database_bloc.dart';
 import 'package:asm/app/core/obj/database.dart';
+import 'package:asm/app/core/obj/record.dart';
 import 'package:asm/app/ui/components/button_square.dart';
 import 'package:asm/app/ui/components/database_card.dart';
 import 'package:asm/app/ui/components/top_bar_app.dart';
@@ -8,7 +9,6 @@ import 'package:asm/config.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class Database extends StatelessWidget {
   final DatabaseBloc bloc = DatabaseBloc();
@@ -18,6 +18,7 @@ class Database extends StatelessWidget {
   DatabaseObject data = DatabaseObject();
   int page = 1;
   bool searching = false;
+  List<Record>? rdataList = [];
 
   Database({super.key});
   @override
@@ -35,6 +36,7 @@ class Database extends StatelessWidget {
               listener: (context, state) {
                 if (state is ShowDetails) {
                   data = state.data;
+                  rdataList = state.dataList;
                 }
                 if (state is GetDataSuccess) {
                   page = state.page;
@@ -276,6 +278,7 @@ class Database extends StatelessWidget {
                         data: data,
                         scrollController: state.scrollController,
                         scrollOffset: state.scrollOffset,
+                        dataList: rdataList,
                       ),
                     );
                   }

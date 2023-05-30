@@ -30,7 +30,8 @@ class DatabaseCard extends StatelessWidget {
         onTap: () async {
           controller.animateTo(0,
               duration: Duration(milliseconds: 300), curve: Curves.ease);
-          bloc.add(ToDetails(data, controller, controller.offset));
+          bloc.add(ToDetails(
+              data, controller, controller.offset, data.attributes!.name!));
         },
         child: Container(
           width: screenWidth,

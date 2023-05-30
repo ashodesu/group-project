@@ -1,6 +1,5 @@
-import 'dart:convert';
-
 import 'package:asm/app/core/obj/database.dart';
+import 'package:asm/app/core/obj/record.dart';
 import 'package:asm/app/core/service/http_service.dart';
 import 'package:asm/config.dart';
 import 'package:bloc/bloc.dart';
@@ -51,8 +50,38 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
         emit(GetDataFailed());
       }
     });
-    on<ToDetails>((event, emit) {
-      emit(ShowDetails(event.data, event.scrollController, event.scrollOffset));
+    on<ToDetails>((event, emit) async {
+      try {
+        Map res = await httpService.getAllReportWithBirdType(event.birdType);
+        if (res['error'] == null) {
+          List r = res['data'];
+          List<Record> dataList = [];
+          for (Map i in r) {
+            Record data = Record();
+            data.id = i['id'];
+            data.typeOfBird = i["attributes"]['BirdName'];
+            data.observationDate = i["attributes"]['BirdDate'] != null
+                ? DateTime.parse(i["attributes"]['BirdDate']).toLocal()
+                : null;
+            data.uploadTime = i["attributes"]['updatedAt'] != null
+                ? DateTime.parse(i["attributes"]['updatedAt']).toLocal()
+                : null;
+            data.details = i["attributes"]['BirdDeatils'];
+            data.locate.nation = i["attributes"]['region'];
+            data.locate.area = i["attributes"]['area'];
+            data.locate.district = i["attributes"]['distrit'];
+            data.locate.details = i["attributes"]['details'];
+            data.photoPath =
+                "${config.host}${i["attributes"]['Photo']['data']['attributes']['url']}";
+            dataList.add(data);
+          }
+          emit(ShowDetails(event.data, event.scrollController,
+              event.scrollOffset, dataList));
+        } else {
+          emit(ShowDetails(
+              event.data, event.scrollController, event.scrollOffset, null));
+        }
+      } catch (e) {}
     });
     on<GoDB>((event, emit) {
       emit(ShowDatabase());

@@ -4,6 +4,7 @@ import 'package:asm/app/core/service/http_service.dart';
 import 'package:asm/app/core/service/storage_service.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 part 'record_submit_event.dart';
 part 'record_submit_state.dart';
 
@@ -71,6 +72,33 @@ class RecordSubmitBloc extends Bloc<RecordSubmitEvent, RecordSubmitState> {
         emit(SubmitDataFailed(
             "!!!Unkown Error Please Contact Admin!!!!\nError Code:\n${e.toString()}"));
       }
+    });
+    on<ExportCSV>((event, emit) {
+      Record record = event.data;
+      List row = [
+        [
+          "Type Of Bird",
+          "Description",
+          "Observation Date",
+          "Appeared Time",
+          "Region",
+          "Area",
+          "District",
+          "Details",
+          "Photo"
+        ],
+        [
+          record.typeOfBird,
+          record.details,
+          DateFormat("dd/MM/yy").format(record.observationDate!),
+          record.startingTime,
+          record.locate.nation,
+          record.locate.area,
+          record.locate.district,
+          record.locate.details,
+          record.imageList.toString()
+        ]
+      ];
     });
   }
 }

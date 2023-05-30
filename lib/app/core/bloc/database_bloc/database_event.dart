@@ -17,8 +17,9 @@ class ToDetails extends DatabaseEvent {
   final DatabaseObject data;
   final ScrollController scrollController;
   final double scrollOffset;
+  final String birdType;
 
-  ToDetails(this.data, this.scrollController, this.scrollOffset);
+  ToDetails(this.data, this.scrollController, this.scrollOffset, this.birdType);
 }
 
 class GoDB extends DatabaseEvent {}

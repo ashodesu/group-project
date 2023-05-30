@@ -60,7 +60,7 @@ class Login extends StatelessWidget {
               if (state is LoginInitial) {
                 bloc.add(CheckLogin());
               }
-              if (state is! Logined && state is! LoginInitial) {
+              if (state is! Logined || state is! LoginInitial) {
                 return Column(
                   children: [
                     Form(

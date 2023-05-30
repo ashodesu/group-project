@@ -8,7 +8,7 @@ abstract class RecordEvent extends Equatable {
 }
 
 class GetRecord extends RecordEvent {
-  final page;
+  final int page;
 
   GetRecord(this.page);
 }

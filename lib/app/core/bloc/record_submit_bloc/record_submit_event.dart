@@ -32,3 +32,9 @@ class SubmitData extends RecordSubmitEvent {
 
   SubmitData(this.data);
 }
+
+class ExportCSV extends RecordSubmitEvent {
+  final Record data;
+
+  ExportCSV(this.data);
+}
