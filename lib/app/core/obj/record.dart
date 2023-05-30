@@ -13,4 +13,5 @@ class Record {
   String? typeOfBird;
   File? imageList;
   String? photoPath;
+  int? photoId;
 }

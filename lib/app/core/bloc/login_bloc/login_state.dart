@@ -11,7 +11,11 @@ class LoginInitial extends LoginState {}
 
 class LoginSuccess extends LoginState {}
 
-class LoginFailed extends LoginState {}
+class LoginFailed extends LoginState {
+  final String msg;
+
+  LoginFailed(this.msg);
+}
 
 class RegistSuccess extends LoginState {}
 

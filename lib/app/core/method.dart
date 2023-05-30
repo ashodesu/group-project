@@ -97,3 +97,39 @@ String? checkStringAdded(String ostr, String nstr) {
   }
   return null;
 }
+
+List<String> getArea() {
+  return ["Hong Kong Island", "Kowloon", "New Territories", "Other Island"];
+}
+
+List<String> getDistrict(String? area) {
+  if (area == "Hong Kong Island") {
+    return [
+      "Central and Western",
+      "Wan Chai",
+      "Eastern",
+      "Southern",
+    ];
+  }
+  if (area == "Kowloon") {
+    return [
+      "Yau Tsim Mong",
+      "Sham Shui Po",
+      "Wong Tai Sin",
+      "Kwun Tong",
+    ];
+  }
+  if (area == "New Territories") {
+    return [
+      "Kwai Tsing",
+      "Tsuen Wan",
+      "Tuen Mun",
+      "Yuen Long",
+      "North",
+      "Tai Po",
+      "Sha Tin",
+      "Sai Kung",
+    ];
+  }
+  return ["Please First Select Aear"];
+}

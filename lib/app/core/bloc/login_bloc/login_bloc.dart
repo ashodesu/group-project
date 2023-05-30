@@ -17,14 +17,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         LoginInfo info = event.info;
         Map response = await httpService.userLogin(info);
         if (response["jwt"] != null) {
+          storageService.clearToken();
           storageService.saveToken(response["jwt"]);
           emit(LoginSuccess());
         } else {
-          emit(LoginFailed());
+          emit(LoginFailed(response['error']['message']));
         }
       } catch (e) {
         print(e);
-        emit(LoginFailed());
+        emit(LoginFailed(
+            "!!!Unknow Error Please Contact Admin!!!\nError Code:\n${e.toString()}"));
       }
     });
     on<UserRegist>((event, emit) async {
@@ -38,7 +40,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(RegistFailed(res['error']['message']));
         }
       } catch (e) {
-        emit(RegistFailed(e.toString()));
+        emit(RegistFailed(
+            "!!!Unknow Error Please Contact Admin!!!\nError Code:\n${e.toString()}"));
       }
     });
   }

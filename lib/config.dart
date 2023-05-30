@@ -6,6 +6,7 @@ class HttpConfig {
   String changeUserInfo = "/api/users/";
   String database = "/api/creature-dbs";
   String regist = "/api/auth/local/register";
+  String upload = "/api/upload";
 }
 
 class DatabaseConfig {

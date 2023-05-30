@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:asm/app/core/obj/record.dart';
 import 'package:asm/app/core/obj/regist_info.dart';
 import 'package:asm/app/core/obj/user_info.dart';
 import 'package:asm/config.dart';
@@ -16,6 +18,9 @@ abstract class HttpService {
   FutureOr searchDatabase(String keywords);
   FutureOr userRegist(RegistInfo info);
   FutureOr getRecord(int page);
+  FutureOr getBirdList();
+  FutureOr uploadPhoto(String token, File file, String name);
+  FutureOr submitReport(String token, Record data, int userId);
   factory HttpService() => _HttpService();
 }
 
@@ -132,8 +137,8 @@ class _HttpService implements HttpService {
       "firstName": info.firstName,
       "lastName": info.lastName,
       "birthday": info.birthday,
+      "role": 1,
     };
-    print(jsonEncode(jsonMap));
     http.Response response = await http.post(
       Uri.parse("${config.host}${config.regist}"),
       headers: {
@@ -154,5 +159,53 @@ class _HttpService implements HttpService {
     );
     Map res = jsonDecode(response.body);
     return res;
+  }
+
+  @override
+  FutureOr getBirdList() async {
+    http.Response response = await http.get(
+      Uri.parse(
+          "${config.host}${config.database}?fields[0]=creatureName&sort[0]=creatureName%3Aasc"),
+    );
+    Map res = jsonDecode(response.body);
+    return res;
+  }
+
+  @override
+  FutureOr submitReport(String token, Record data, int userId) async {
+    Map jsonMap = {
+      "data": {
+        "BirdName": data.typeOfBird,
+        "BirdDate": data.observationDate!.toUtc().toString(),
+        "BirdDeatils": data.details,
+        "IsVisible": true,
+        "postByUserID": userId.toString(),
+        "Photo": {"id": data.photoId}
+      }
+    };
+    http.Response response = await http.post(
+      Uri.parse("${config.host}${config.report}"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(jsonMap),
+    );
+    Map body = jsonDecode(response.body);
+    return body;
+  }
+
+  @override
+  Future<FutureOr> uploadPhoto(String token, File file, String name) async {
+    http.MultipartRequest request = http.MultipartRequest(
+        'POST', Uri.parse("${config.host}${config.upload}"));
+    request.headers.addAll({'Authorization': 'Bearer $token'});
+    request.files.add(await http.MultipartFile.fromPath("files", file.path));
+    request.fields['files'] = name;
+    var response = await request.send();
+    var responsed = await http.Response.fromStream(response);
+    var body = jsonDecode(responsed.body);
+    return body;
   }
 }

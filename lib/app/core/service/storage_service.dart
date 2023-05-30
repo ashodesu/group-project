@@ -21,11 +21,16 @@ class _StorageService implements StorageService {
 
   @override
   FutureOr getToken() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String? key = await pref.getString('jwt');
-    if (key != null) {
-      return key;
-    } else {
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? key = pref.getString('jwt');
+      if (key != null) {
+        return key;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e);
       return null;
     }
   }

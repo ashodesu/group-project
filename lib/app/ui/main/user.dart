@@ -23,6 +23,9 @@ class User extends StatelessWidget {
           if (state is LogoutSuccess) {
             context.pop();
           }
+          if (state is GetInfoFailed) {
+            context.pop();
+          }
         },
         builder: (context, state) {
           if (state is GetInfoSuccess) {
@@ -98,7 +101,7 @@ class User extends StatelessWidget {
                           const SizedBox(height: 24),
                           SquareButton(
                             onPressed: () {
-                              context.push('/user/change-info');
+                              context.push('/change-info');
                             },
                             height: screenHeight * 0.04,
                             width: screenWidth * 0.07,
@@ -135,12 +138,6 @@ class User extends StatelessWidget {
                   ),
                 ),
               ],
-            );
-          }
-          if (state is GetInfoFailed) {
-            return Login(
-              mode: true,
-              userBloc: bloc,
             );
           }
           if (state is UserInitial) {

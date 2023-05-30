@@ -24,7 +24,7 @@ class ChangeUserInfoPage extends StatelessWidget {
     Widget body = SafeArea(
       child: Column(
         children: [
-          const TopBar(title: 'Change Information'),
+          TopBar(title: 'Change Information'),
           Expanded(
             child: BlocConsumer<UserBloc, UserState>(
               bloc: bloc,

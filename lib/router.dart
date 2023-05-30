@@ -29,6 +29,10 @@ class AppRouter extends StatelessWidget {
                   ],
                 ),
                 GoRoute(
+                  path: 'change-info',
+                  builder: (context, state) => ChangeUserInfoPage(),
+                ),
+                GoRoute(
                   path: 'regist',
                   builder: (context, state) => RegistPage(),
                 ),

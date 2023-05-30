@@ -18,7 +18,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         if (response['id'] != null &&
             response['id'] != "" &&
             response['error'] == null) {
-          print('in');
           UserInfo info = UserInfo();
           info.id = response['id'];
           info.userName = response['username'];
@@ -34,19 +33,25 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           }
           emit(GetInfoSuccess(userInfo: info));
         } else {
-          emit(GetInfoFailed());
+          emit(GetInfoFailed("Token Expiry, Please Login Again"));
         }
       } catch (e) {
-        emit(GetInfoFailed());
+        emit(GetInfoFailed(
+            "!!!Unknow Error Please Contact Admin!!!\nError Code:\n${e.toString()}"));
       }
     });
     on<UpdateUserInfo>((event, emit) async {
-      String token = await storageService.getToken();
-      Map res = await httpService.updateUserInfo(token, event.userInfo);
-      if (res['error'] == null) {
-        emit(UpdateInfoSuccess());
-      } else {
-        emit(UpdateInfoFailed());
+      try {
+        String token = await storageService.getToken();
+        Map res = await httpService.updateUserInfo(token, event.userInfo);
+        if (res['error'] == null) {
+          emit(UpdateInfoSuccess());
+        } else {
+          emit(UpdateInfoFailed(res['error']['message']));
+        }
+      } catch (e) {
+        emit(UpdateInfoFailed(
+            "!!!Unknow Error Please Contact Admin!!!\nError Code:\n${e.toString()}"));
       }
     });
     on<Logout>(

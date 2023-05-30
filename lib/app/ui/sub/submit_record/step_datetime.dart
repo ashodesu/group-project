@@ -1,7 +1,6 @@
 import 'package:asm/app/core/bloc/record_submit_bloc/record_submit_bloc.dart';
 import 'package:asm/app/core/method.dart';
 import 'package:asm/app/ui/components/button_square.dart';
-import 'package:asm/app/ui/components/dropdown_field.dart';
 import 'package:asm/app/ui/components/textfield_square.dart';
 import 'package:asm/app/core/obj/record.dart';
 import 'package:asm/theme.dart';
@@ -18,9 +17,12 @@ class DateTimeStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Record recordWrite = record;
-    String oldDate = 'DD/MM/YYYY';
-    String oldTime = 'HH:MM';
+    String oldDate = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    recordWrite.observationDate = DateTime.now();
+    String oldTime = DateFormat('HH:mm').format(DateTime.now());
+    recordWrite.startingTime = DateFormat('HH:mm').format(DateTime.now());
     RegExp numberReg = RegExp(r'[0-9]+$');
+    final key = GlobalKey<FormState>();
     if (recordWrite.observationDate != null) {
       oldDate = DateFormat('dd/MM/yyyy').format(recordWrite.observationDate!);
     }
@@ -30,6 +32,7 @@ class DateTimeStep extends StatelessWidget {
     dateController.text = oldDate;
     timeController.text = oldTime;
     return Form(
+      key: key,
       child: Column(
         children: [
           TextFieldSquare(
@@ -64,10 +67,15 @@ class DateTimeStep extends StatelessWidget {
                 }
               }
             },
+            validate: (val) {
+              if (recordWrite.observationDate == null) {
+                return "Please Input a available date";
+              }
+            },
           ),
           const SizedBox(height: 24),
           TextFieldSquare(
-            labelText: 'Starting Time',
+            labelText: 'Appeared Time',
             controller: timeController,
             onChanged: (val) {
               if (val != null) {
@@ -97,6 +105,12 @@ class DateTimeStep extends StatelessWidget {
                 }
               }
             },
+            validate: (val) {
+              if (recordWrite.startingTime == null ||
+                  recordWrite.startingTime == "") {
+                return "Please Input a available time";
+              }
+            },
           ),
           const SizedBox(height: 24),
           Row(
@@ -119,7 +133,16 @@ class DateTimeStep extends StatelessWidget {
               ),
               SquareButton(
                 onPressed: () {
-                  bloc.add(NextStep(record: recordWrite));
+                  if (key.currentState!.validate()) {
+                    List splitted = recordWrite.startingTime!.split(':');
+                    recordWrite.observationDate = recordWrite.observationDate!
+                        .add(Duration(
+                          hours: int.parse(splitted[0]),
+                          minutes: int.parse(splitted[1]),
+                        ))
+                        .toUtc();
+                    bloc.add(NextStep(record: recordWrite));
+                  }
                 },
                 height: screenHeight * 0.04,
                 width: screenWidth * 0.04,

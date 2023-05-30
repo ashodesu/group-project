@@ -1,16 +1,15 @@
 import 'package:asm/app/core/bloc/database_bloc/database_bloc.dart';
-import 'package:asm/app/core/bloc/login_bloc/login_bloc.dart';
+import 'package:asm/app/core/service/storage_service.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar(
-      {super.key, required this.title, this.databaseBloc, this.loginBloc});
+  TopBar({super.key, required this.title, this.databaseBloc});
 
   final String title;
   final DatabaseBloc? databaseBloc;
-  final LoginBloc? loginBloc;
+  final StorageService storageService = StorageService();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,12 @@ class TopBar extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () async {
-                    context.push('/home/submit');
+                    String? token = await storageService.getToken();
+                    if (token != null) {
+                      context.push('/home/submit');
+                    } else {
+                      context.pop();
+                    }
                   },
                   icon: Image.asset('assets/images/icon_add.png'),
                 )

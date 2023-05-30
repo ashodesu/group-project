@@ -24,3 +24,11 @@ class AddPhoto extends RecordSubmitEvent {
 
   const AddPhoto({required this.record});
 }
+
+class GetInitData extends RecordSubmitEvent {}
+
+class SubmitData extends RecordSubmitEvent {
+  final Record data;
+
+  SubmitData(this.data);
+}
