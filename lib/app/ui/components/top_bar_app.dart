@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TopBar extends StatelessWidget {
-  TopBar({super.key, required this.title, this.databaseBloc});
+  TopBar(
+      {super.key, required this.title, this.databaseBloc, this.buttonFunction});
 
   final String title;
   final DatabaseBloc? databaseBloc;
   final StorageService storageService = StorageService();
+  final Function()? buttonFunction;
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +55,10 @@ class TopBar extends StatelessWidget {
                 ),
               ] else ...[
                 IconButton(
-                  onPressed: () {
-                    context.pop();
-                  },
+                  onPressed: buttonFunction ??
+                      () {
+                        context.pop();
+                      },
                   icon: const Icon(Icons.arrow_back_ios),
                 ),
                 Text(

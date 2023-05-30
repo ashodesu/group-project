@@ -41,7 +41,6 @@ class Login extends StatelessWidget {
           BlocConsumer<LoginBloc, LoginState>(
             bloc: bloc,
             listener: (context, state) {
-              if (state is LoginInitial) {}
               if (state is LoginSuccess || state is Logined) {
                 if (mode == null || mode == false) {
                   context.go('/home');
@@ -58,108 +57,116 @@ class Login extends StatelessWidget {
               }
             },
             builder: (context, state) {
-              return Column(
-                children: [
-                  Form(
-                    key: key,
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
-                      child: Column(
-                        children: [
-                          TextFieldRadiusToSquare(
-                            labelText: 'Username',
-                            onSaved: (value) {
-                              info.id = value;
-                            },
-                            autocorrect: false,
-                            controller: controller1,
-                            validate: (value) {
-                              if (value == null || value == "") {
-                                return "Username can't be Emty";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: screenHeight * 0.05),
-                          TextFieldRadiusToSquare(
-                            labelText: 'Password',
-                            onSaved: (value) {
-                              info.password = value;
-                            },
-                            hideText: true,
-                            autocorrect: false,
-                            controller: controller2,
-                            validate: (value) {
-                              if (value == null || value == "") {
-                                return "Password can't be Emty";
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: screenHeight * 0.05),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SquareButton(
-                        onPressed: () {
-                          context.push('/regist');
-                        },
-                        height: screenHeight * 0.04,
-                        width: screenWidth * 0.04,
-                        child: Text(
-                          "Regist",
-                          style: TextStyle(
-                            color: black,
-                            fontSize: 20,
-                            fontFamily: fontStyle,
-                          ),
+              if (state is LoginInitial) {
+                bloc.add(CheckLogin());
+              }
+              if (state is! Logined && state is! LoginInitial) {
+                return Column(
+                  children: [
+                    Form(
+                      key: key,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.015),
+                        child: Column(
+                          children: [
+                            TextFieldRadiusToSquare(
+                              labelText: 'Username',
+                              onSaved: (value) {
+                                info.id = value;
+                              },
+                              autocorrect: false,
+                              controller: controller1,
+                              validate: (value) {
+                                if (value == null || value == "") {
+                                  return "Username can't be Emty";
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: screenHeight * 0.05),
+                            TextFieldRadiusToSquare(
+                              labelText: 'Password',
+                              onSaved: (value) {
+                                info.password = value;
+                              },
+                              hideText: true,
+                              autocorrect: false,
+                              controller: controller2,
+                              validate: (value) {
+                                if (value == null || value == "") {
+                                  return "Password can't be Emty";
+                                }
+                                return null;
+                              },
+                            ),
+                            SizedBox(height: screenHeight * 0.05),
+                          ],
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.025),
-                      SquareButton(
-                        onPressed: () {
-                          if (key.currentState!.validate()) {
-                            key.currentState!.save();
-                            bloc.add(UserLogin(info: info));
-                          }
-                        },
-                        height: screenHeight * 0.04,
-                        width: screenWidth * 0.04,
-                        child: Text(
-                          "Login",
-                          style: TextStyle(
-                            color: black,
-                            fontSize: 20,
-                            fontFamily: fontStyle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SquareButton(
+                          onPressed: () {
+                            context.push('/regist');
+                          },
+                          height: screenHeight * 0.04,
+                          width: screenWidth * 0.04,
+                          child: Text(
+                            "Regist",
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 20,
+                              fontFamily: fontStyle,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (mode == null || mode == false) {
-                        context.go('/home');
-                      }
-                      if (mode == true) {
-                        userBloc!.add(GetUserInfo());
-                      }
-                    },
-                    child: const Text(
-                      'Login Later',
-                      style: TextStyle(
-                        fontSize: 16,
-                        decoration: TextDecoration.underline,
-                        color: blue,
+                        SizedBox(width: screenWidth * 0.025),
+                        SquareButton(
+                          onPressed: () {
+                            if (key.currentState!.validate()) {
+                              key.currentState!.save();
+                              bloc.add(UserLogin(info: info));
+                            }
+                          },
+                          height: screenHeight * 0.04,
+                          width: screenWidth * 0.04,
+                          child: Text(
+                            "Login",
+                            style: TextStyle(
+                              color: black,
+                              fontSize: 20,
+                              fontFamily: fontStyle,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        if (mode == null || mode == false) {
+                          context.go('/home');
+                        }
+                        if (mode == true) {
+                          userBloc!.add(GetUserInfo());
+                        }
+                      },
+                      child: const Text(
+                        'Login Later',
+                        style: TextStyle(
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                          color: blue,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(),
               );
             },
           ),

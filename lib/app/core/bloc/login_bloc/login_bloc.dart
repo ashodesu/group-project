@@ -50,11 +50,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           String? token = await storageService.getToken();
           if (token != null && token != "") {
             Map res = await httpService.getUserInfo(token);
-            if (res['error'] == null && res['data'] != null) {
+            if (res['error'] == null && res['id'] != null) {
               emit(Logined());
             }
           }
         } catch (e) {
+          print("Error: $e");
           emit(HaventLogin());
         }
       },

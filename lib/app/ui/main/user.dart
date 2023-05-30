@@ -3,6 +3,7 @@ import 'package:asm/app/core/obj/user_info.dart';
 import 'package:asm/app/ui/components/button_square.dart';
 import 'package:asm/app/ui/components/top_bar_app.dart';
 import 'package:asm/app/ui/login.dart';
+import 'package:asm/app/ui/sub/my_record/my_record.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +51,9 @@ class User extends StatelessWidget {
                           ),
                           SizedBox(height: screenHeight * 0.02),
                           SquareButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              bloc.add(ToMyRecord());
+                            },
                             height: screenHeight * 0.05,
                             width: screenWidth,
                             child: Text(
@@ -140,7 +143,10 @@ class User extends StatelessWidget {
               ],
             );
           }
-          if (state is UserInitial) {
+          if (state is ShowMyRecord) {
+            return MyRecord(bloc: bloc, info: info);
+          }
+          if (state is UserInitial || state is ShowUserInfo) {
             bloc.add(GetUserInfo());
           }
           return Container();

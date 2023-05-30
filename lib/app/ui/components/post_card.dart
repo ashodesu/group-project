@@ -5,17 +5,26 @@ import 'package:remixicon/remixicon.dart';
 
 class PostCard extends StatefulWidget {
   final Record data;
+  final bool? mode;
+  final Function()? onPress;
 
-  const PostCard({super.key, required this.data});
+  const PostCard({super.key, required this.data, this.mode, this.onPress});
   @override
-  State<PostCard> createState() => _PostCardState(data: data);
+  State<PostCard> createState() =>
+      _PostCardState(data: data, mode: mode ?? false, onPress: onPress);
 }
 
 class _PostCardState extends State<PostCard> {
   final Record data;
   bool like = false;
+  final bool mode;
+  final Function()? onPress;
 
-  _PostCardState({required this.data});
+  _PostCardState({
+    required this.data,
+    required this.mode,
+    this.onPress,
+  });
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -65,21 +74,28 @@ class _PostCardState extends State<PostCard> {
                       )),
                       Row(
                         children: [
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                if (like == false) {
-                                  like = true;
-                                } else if (like == true) {
-                                  like = false;
-                                }
-                              });
-                            },
-                            icon: Icon(
-                              Remix.heart_3_fill,
-                              color: like == true ? red : black,
+                          if (mode) ...[
+                            IconButton(
+                              onPressed: onPress,
+                              icon: Icon(Icons.delete),
                             ),
-                          ),
+                          ] else ...[
+                            IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (like == false) {
+                                    like = true;
+                                  } else if (like == true) {
+                                    like = false;
+                                  }
+                                });
+                              },
+                              icon: Icon(
+                                Remix.heart_3_fill,
+                                color: like == true ? red : black,
+                              ),
+                            ),
+                          ]
                         ],
                       ),
                     ],

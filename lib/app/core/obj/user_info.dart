@@ -1,3 +1,5 @@
+import 'package:asm/app/core/obj/record.dart';
+
 class UserInfo {
   int? id;
   String? userName;
@@ -8,4 +10,5 @@ class UserInfo {
   DateTime? createAt;
   DateTime? updateAt;
   int? postCount;
+  List<Record> recordList = [];
 }

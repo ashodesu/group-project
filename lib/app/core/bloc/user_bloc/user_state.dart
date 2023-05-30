@@ -30,3 +30,7 @@ class UpdateInfoFailed extends UserState {
 }
 
 class LogoutSuccess extends UserState {}
+
+class ShowMyRecord extends UserState {}
+
+class ShowUserInfo extends UserState {}

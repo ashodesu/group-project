@@ -18,3 +18,13 @@ class UpdateUserInfo extends UserEvent {
 }
 
 class Logout extends UserEvent {}
+
+class ToMyRecord extends UserEvent {}
+
+class ToUserInfo extends UserEvent {}
+
+class RemoveReport extends UserEvent {
+  final int reportId;
+
+  RemoveReport(this.reportId);
+}

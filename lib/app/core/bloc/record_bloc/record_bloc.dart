@@ -21,7 +21,7 @@ class RecordBloc extends Bloc<RecordEvent, RecordState> {
           List<Record> dataList = [];
           for (Map i in r) {
             Record data = Record();
-            data.id = i["attributes"]['id'];
+            data.id = i['id'];
             data.typeOfBird = i["attributes"]['BirdName'];
             data.observationDate = i["attributes"]['BirdDate'] != null
                 ? DateTime.parse(i["attributes"]['BirdDate']).toLocal()

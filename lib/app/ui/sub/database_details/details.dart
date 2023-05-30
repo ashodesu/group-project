@@ -1,11 +1,8 @@
 import 'package:asm/app/core/bloc/database_bloc/database_bloc.dart';
 import 'package:asm/app/core/obj/database.dart';
-import 'package:asm/app/core/service/storage_service.dart';
 import 'package:asm/app/ui/components/database_text.dart';
-import 'package:asm/app/ui/components/top_bar_app.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DatabaseDetails extends StatelessWidget {
   final DatabaseObject data;

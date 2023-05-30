@@ -21,6 +21,7 @@ abstract class HttpService {
   FutureOr getBirdList();
   FutureOr uploadPhoto(String token, File file, String name);
   FutureOr submitReport(String token, Record data, int userId);
+  FutureOr removeReport(String token, int reportId);
   factory HttpService() => _HttpService();
 }
 
@@ -74,7 +75,7 @@ class _HttpService implements HttpService {
     int id = userBody['id'];
     http.Response response = await http.get(
       Uri.parse(
-          "${config.host}${config.report}?filters[postByUserID][\$eq]=$id"),
+          "${config.host}${config.report}?populate=*&filters[postByUserID][\$eq]=$id&filters[IsVisible][\$eq]=true"),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -155,7 +156,7 @@ class _HttpService implements HttpService {
   FutureOr getRecord(int page) async {
     http.Response response = await http.get(
       Uri.parse(
-          "${config.host}${config.report}?populate=*&sort[0]=createdAt%3Adesc&pagination[page]=${page.toString()}&pagination[pageSize]=${reportConfig.pageSize}&filters[IsVisible]=true"),
+          "${config.host}${config.report}?populate=*&sort[0]=createdAt%3Adesc&pagination[page]=${page.toString()}&pagination[pageSize]=${reportConfig.pageSize}&filters[IsVisible][\$eq]=true"),
     );
     Map res = jsonDecode(response.body);
     return res;
@@ -207,5 +208,25 @@ class _HttpService implements HttpService {
     var responsed = await http.Response.fromStream(response);
     var body = jsonDecode(responsed.body);
     return body;
+  }
+
+  @override
+  FutureOr removeReport(String token, int reportId) async {
+    Map body = {
+      "data": {
+        "IsVisible": false,
+      },
+    };
+    http.Response response = await http.put(
+      Uri.parse("${config.host}${config.report}/$reportId"),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: jsonEncode(body),
+    );
+    Map res = jsonDecode(response.body);
+    return res;
   }
 }
