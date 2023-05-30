@@ -16,7 +16,7 @@ class DatabaseBloc extends Bloc<DatabaseEvent, DatabaseState> {
   DatabaseBloc() : super(DatabaseInitial()) {
     on<GetData>((event, emit) async {
       try {
-        Map res = await httpService.getDatabaseInfo(event.page, event.pageSize);
+        Map res = await httpService.getDatabaseInfo(event.page);
         if (res['data'] != null) {
           List jsonList = res['data'];
           List<DatabaseObject> dataList = [];

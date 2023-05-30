@@ -1,13 +1,16 @@
 import 'package:asm/app/core/bloc/database_bloc/database_bloc.dart';
+import 'package:asm/app/core/bloc/login_bloc/login_bloc.dart';
 import 'package:asm/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class TopBar extends StatelessWidget {
-  const TopBar({super.key, required this.title, this.databaseBloc});
+  const TopBar(
+      {super.key, required this.title, this.databaseBloc, this.loginBloc});
 
   final String title;
   final DatabaseBloc? databaseBloc;
+  final LoginBloc? loginBloc;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,7 @@ class TopBar extends StatelessWidget {
                   style: TextStyle(fontSize: 28, fontFamily: fontStyle),
                 ),
                 IconButton(
-                  onPressed: () {
+                  onPressed: () async {
                     context.push('/home/submit');
                   },
                   icon: Image.asset('assets/images/icon_add.png'),

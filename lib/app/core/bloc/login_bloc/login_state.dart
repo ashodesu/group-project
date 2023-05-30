@@ -12,3 +12,12 @@ class LoginInitial extends LoginState {}
 class LoginSuccess extends LoginState {}
 
 class LoginFailed extends LoginState {}
+
+class RegistSuccess extends LoginState {}
+
+class RegistFailed extends LoginState {
+  final String msg;
+  @override
+  List<Object> get props => [msg];
+  RegistFailed(this.msg);
+}

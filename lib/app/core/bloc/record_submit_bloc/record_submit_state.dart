@@ -24,7 +24,7 @@ class PhotoUpdate extends RecordSubmitState {
   final Record record;
 
   @override
-  List<Object> get props => [record.imageList];
+  List<File> get props => [record.imageList!];
 
   const PhotoUpdate({required this.record});
 }

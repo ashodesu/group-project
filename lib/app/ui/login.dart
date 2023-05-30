@@ -105,7 +105,9 @@ class Login extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SquareButton(
-                        onPressed: null,
+                        onPressed: () {
+                          context.push('/regist');
+                        },
                         height: screenHeight * 0.04,
                         width: screenWidth * 0.04,
                         child: Text(

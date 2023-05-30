@@ -1,4 +1,5 @@
 import 'package:asm/app/core/bloc/database_bloc/database_bloc.dart';
+import 'package:asm/app/ui/regist.dart';
 import 'package:asm/app/ui/sub/change_info/change_info.dart';
 import 'package:asm/app/ui/login.dart';
 import 'package:asm/app/ui/main/main.dart';
@@ -26,6 +27,10 @@ class AppRouter extends StatelessWidget {
                       builder: (context, state) => SubmitRecord(),
                     ),
                   ],
+                ),
+                GoRoute(
+                  path: 'regist',
+                  builder: (context, state) => RegistPage(),
                 ),
               ],
             ),

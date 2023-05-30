@@ -2,11 +2,16 @@ class HttpConfig {
   String host = "https://squareinhk.com";
   String login = "/api/auth/local";
   String getUser = "/api/users/me";
-  String postCounter = "/api/creature-dbs?filters[postByUserID][\$eq]=1";
+  String report = "/api/survey-reports";
   String changeUserInfo = "/api/users/";
   String database = "/api/creature-dbs";
+  String regist = "/api/auth/local/register";
 }
 
 class DatabaseConfig {
   int pageSize = 10;
+}
+
+class ReportConfig {
+  int pageSize = 20;
 }

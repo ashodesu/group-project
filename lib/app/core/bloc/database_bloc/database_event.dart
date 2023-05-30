@@ -9,9 +9,8 @@ abstract class DatabaseEvent extends Equatable {
 
 class GetData extends DatabaseEvent {
   final int page;
-  final int pageSize;
 
-  const GetData({required this.page, required this.pageSize});
+  const GetData({required this.page});
 }
 
 class ToDetails extends DatabaseEvent {

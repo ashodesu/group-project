@@ -80,8 +80,8 @@ class Database extends StatelessWidget {
                                             const Duration(milliseconds: 300),
                                         curve: Curves.easeIn);
                                     bloc.add(GetData(
-                                        page: page - 1,
-                                        pageSize: config.pageSize));
+                                      page: page - 1,
+                                    ));
                                   },
                                   height: screenHeight * 0.04,
                                   width: screenWidth * 0.07,
@@ -101,8 +101,8 @@ class Database extends StatelessWidget {
                                             const Duration(milliseconds: 300),
                                         curve: Curves.easeIn);
                                     bloc.add(GetData(
-                                        page: page + 1,
-                                        pageSize: config.pageSize));
+                                      page: page + 1,
+                                    ));
                                   },
                                   height: screenHeight * 0.04,
                                   width: screenWidth * 0.07,
@@ -121,7 +121,8 @@ class Database extends StatelessWidget {
                                         curve: Curves.ease);
                                     searching = false;
                                     bloc.add(GetData(
-                                        page: page, pageSize: config.pageSize));
+                                      page: page,
+                                    ));
                                   },
                                   height: screenHeight * 0.04,
                                   width: screenWidth * 0.07,
@@ -153,8 +154,8 @@ class Database extends StatelessWidget {
                                   SquareButton(
                                     onPressed: () {
                                       bloc.add(GetData(
-                                          page: page - 1,
-                                          pageSize: config.pageSize));
+                                        page: page - 1,
+                                      ));
                                     },
                                     height: screenHeight * 0.04,
                                     width: screenWidth * 0.07,
@@ -167,8 +168,8 @@ class Database extends StatelessWidget {
                                   SquareButton(
                                     onPressed: () {
                                       bloc.add(GetData(
-                                          page: page,
-                                          pageSize: config.pageSize));
+                                        page: page,
+                                      ));
                                     },
                                     height: screenHeight * 0.04,
                                     width: screenWidth * 0.07,
@@ -198,7 +199,8 @@ class Database extends StatelessWidget {
                                 SquareButton(
                                   onPressed: () {
                                     bloc.add(GetData(
-                                        page: page, pageSize: config.pageSize));
+                                      page: page,
+                                    ));
                                   },
                                   height: screenHeight * 0.04,
                                   width: screenWidth * 0.07,
@@ -232,8 +234,8 @@ class Database extends StatelessWidget {
                                   SquareButton(
                                     onPressed: () {
                                       bloc.add(GetData(
-                                          page: page,
-                                          pageSize: config.pageSize));
+                                        page: page,
+                                      ));
                                     },
                                     height: screenHeight * 0.04,
                                     width: screenWidth * 0.07,
@@ -246,8 +248,8 @@ class Database extends StatelessWidget {
                                   SquareButton(
                                     onPressed: () {
                                       bloc.add(GetData(
-                                          page: page,
-                                          pageSize: config.pageSize));
+                                        page: page,
+                                      ));
                                     },
                                     height: screenHeight * 0.04,
                                     width: screenWidth * 0.07,
@@ -279,7 +281,9 @@ class Database extends StatelessWidget {
                   }
                 }
                 if (dataList.length == 0) {
-                  bloc.add(GetData(page: page, pageSize: config.pageSize));
+                  bloc.add(GetData(
+                    page: page,
+                  ));
                 }
                 return Center(child: CircularProgressIndicator());
               },

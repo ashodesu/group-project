@@ -16,7 +16,7 @@ class ContentStep extends StatelessWidget {
   Widget build(BuildContext context) {
     Record recordWrite = record;
 
-    List<File> imageList = recordWrite.imageList ?? [];
+    File? imageList = recordWrite.imageList;
 
     Future pickImage() async {
       try {
@@ -26,8 +26,7 @@ class ContentStep extends StatelessWidget {
         print("Waiting");
         if (image == null) return false;
         print("Waiting 2");
-        imageList.add(File(image.path));
-        if (imageList.length == imageList.length + 1) return false;
+        imageList = File(image.path);
         print("Success");
         return true;
       } catch (e) {
@@ -52,7 +51,7 @@ class ContentStep extends StatelessWidget {
             child: Text('Pick Photo'),
           ),
           const SizedBox(height: 24),
-          if (imageList.isNotEmpty) ...[
+          if (imageList != null) ...[
             Center(
               child: Container(
                 height: 500,
@@ -60,12 +59,12 @@ class ContentStep extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   children: [
-                    for (var i in imageList) ...[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Image.file(i),
-                      ),
-                    ]
+                    // for (var i in imageList)...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: Image.file(imageList!),
+                    ),
+                    // ]
                   ],
                 ),
               ),

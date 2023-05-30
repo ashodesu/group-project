@@ -4,11 +4,13 @@ import 'package:asm/app/core/obj/locate.dart';
 
 class Record {
   int step = 1;
+  int? id;
   Locate locate = Locate();
   DateTime? observationDate;
-  String? observationType;
+  DateTime? uploadTime;
   String? startingTime;
   String? details;
   String? typeOfBird;
-  List<File> imageList = [];
+  File? imageList;
+  String? photoPath;
 }
