@@ -161,6 +161,7 @@ class _HttpService implements HttpService {
           "${config.host}${config.report}?populate=*&sort[0]=createdAt%3Adesc&pagination[page]=${page.toString()}&pagination[pageSize]=${reportConfig.pageSize}&filters[IsVisible][\$eq]=true"),
     );
     Map res = jsonDecode(response.body);
+    print(res);
     return res;
   }
 
