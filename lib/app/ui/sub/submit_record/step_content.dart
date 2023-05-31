@@ -169,7 +169,7 @@ class _ContentStepState extends State<ContentStep> {
               ),
               SquareButton(
                 onPressed: () {
-                  if (recordWrite.photoPath == null) {
+                  if (recordWrite.imageList == null) {
                     setState(() {
                       errorText = "Please Pick a Photo";
                     });
