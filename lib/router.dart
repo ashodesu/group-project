@@ -1,4 +1,10 @@
-import 'package:asm/app/landing.dart';
+import 'package:asm/app/core/bloc/database_bloc/database_bloc.dart';
+import 'package:asm/app/ui/regist.dart';
+import 'package:asm/app/ui/sub/change_info/change_info.dart';
+import 'package:asm/app/ui/login.dart';
+import 'package:asm/app/ui/main/main.dart';
+import 'package:asm/app/ui/sub/database_details/details.dart';
+import 'package:asm/app/ui/sub/submit_record/submit_record.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,7 +16,25 @@ class AppRouter extends StatelessWidget {
           routes: [
             GoRoute(
               path: '/',
-              builder: (context, state) => Landing(),
+              builder: (context, state) => MainPage(defaultBody: 'home'),
+              routes: [
+                GoRoute(
+                  path: 'login',
+                  builder: (context, state) => Login(),
+                ),
+                GoRoute(
+                  path: 'submit',
+                  builder: (context, state) => SubmitRecord(),
+                ),
+                GoRoute(
+                  path: 'change-info',
+                  builder: (context, state) => ChangeUserInfoPage(),
+                ),
+                GoRoute(
+                  path: 'regist',
+                  builder: (context, state) => RegistPage(),
+                ),
+              ],
             ),
           ],
         ),
