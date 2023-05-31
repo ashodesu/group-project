@@ -62,7 +62,7 @@ class RecordSubmitBloc extends Bloc<RecordSubmitEvent, RecordSubmitState> {
         Map userRes = await httpService.getUserInfo(token);
         int userId = userRes['id'];
         var photoRes = await httpService.uploadPhoto(
-            token, data.imageList!, data.photoPath!);
+            token, data.imageList!, data.imageList!.path.split('/').last);
         if (photoRes is List) {
           data.photoId = photoRes[0]['id'];
           Map reportRes = await httpService.submitReport(token, data, userId);
@@ -98,14 +98,17 @@ class RecordSubmitBloc extends Bloc<RecordSubmitEvent, RecordSubmitState> {
             record.details,
             DateFormat("dd/MM/yyyy").format(record.observationDate!),
             record.startingTime,
-            record.locate.nation,
+            record.locate.nation ?? "Hong Kong SAR",
             record.locate.area,
             record.locate.district,
-            record.locate.details,
+            record.locate.details ?? "",
             record.imageList!.path
           ]
         ];
         File f = File(event.path + "/${record.typeOfBird}_Report.csv");
+        if (!f.existsSync()) {
+          await f.create(recursive: true);
+        }
         String csv = const ListToCsvConverter().convert(row);
         f.writeAsString(csv);
         emit(ExportSuccess("Export Success"));

@@ -56,7 +56,6 @@ class SubmitRecord extends StatelessWidget {
                 }
               },
               builder: (context, state) {
-                print("rebuild");
                 if (state is GetInitDataSuccess) {
                   birdTypeList = state.dataList;
                 }
@@ -66,7 +65,6 @@ class SubmitRecord extends StatelessWidget {
                 if (state is ImportSuccess) {
                   record = state.record;
                 }
-                print(record.locate.area);
                 return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),

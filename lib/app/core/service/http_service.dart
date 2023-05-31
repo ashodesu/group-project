@@ -77,7 +77,7 @@ class _HttpService implements HttpService {
     int id = userBody['id'];
     http.Response response = await http.get(
       Uri.parse(
-          "${config.host}${config.report}?populate=*&filters[postByUserID][\$eq]=$id&filters[IsVisible][\$eq]=true"),
+          "${config.host}${config.report}?populate=*&filters[postByUserID][\$eq]=$id&filters[IsVisible][\$eq]=true&sort[0]=createdAt%3Adesc"),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -180,7 +180,7 @@ class _HttpService implements HttpService {
       "data": {
         "BirdName": data.typeOfBird,
         "BirdDate": data.observationDate!.toUtc().toString(),
-        "BirdDeatils": data.details,
+        "BirdDeatils": data.details ?? "",
         "IsVisible": true,
         "postByUserID": userId.toString(),
         "Photo": {"id": data.photoId}
