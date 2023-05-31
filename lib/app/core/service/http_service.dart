@@ -140,7 +140,7 @@ class _HttpService implements HttpService {
       "firstName": info.firstName,
       "lastName": info.lastName,
       "birthday": info.birthday,
-      "role": 1,
+      "role": 3,
     };
     http.Response response = await http.post(
       Uri.parse("${config.host}${config.regist}"),

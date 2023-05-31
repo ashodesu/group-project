@@ -1,3 +1,6 @@
+import 'package:asm/config.dart';
+import 'package:encrypt/encrypt.dart';
+
 bool checkDateFormat(String date) {
   RegExp dateFormat = RegExp(r'[0-9]{2}/[0-9]{2}/[0-9]{4}');
   if (dateFormat.hasMatch(date) && date.length == 10) {
@@ -132,4 +135,24 @@ List<String> getDistrict(String? area) {
     ];
   }
   return ["Please First Select Aear"];
+}
+
+encryptAES(String plainText) {
+  final SecConfig config = SecConfig();
+  String encrypted;
+  final key = Key.fromUtf8(config.key);
+  final iv = IV.fromLength(config.iv);
+  final encrypter = Encrypter(AES(key));
+  encrypted = encrypter.encrypt(plainText, iv: iv).base64;
+  return encrypted;
+}
+
+decryptAES(String encrypted) {
+  String decrypted;
+  final SecConfig config = SecConfig();
+  final key = Key.fromUtf8(config.key);
+  final iv = IV.fromLength(config.iv);
+  final encrypter = Encrypter(AES(key));
+  decrypted = encrypter.decrypt(Encrypted.fromBase64(encrypted), iv: iv);
+  return decrypted;
 }

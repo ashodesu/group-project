@@ -148,7 +148,7 @@ class Login extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           if (mode == null || mode == false) {
-                            context.go('/home');
+                            context.go('/');
                           }
                           if (mode == true) {
                             userBloc!.add(GetUserInfo());

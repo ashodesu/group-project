@@ -24,7 +24,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           emit(LoginFailed(response['error']['message']));
         }
       } catch (e) {
-        print(e);
+        print("Error $e");
         emit(LoginFailed(
             "!!!Unknow Error Please Contact Admin!!!\nError Code:\n${e.toString()}"));
       }
