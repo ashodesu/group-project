@@ -140,7 +140,7 @@ class _HttpService implements HttpService {
       "firstName": info.firstName,
       "lastName": info.lastName,
       "birthday": info.birthday,
-      "role": 1,
+      "role": 3,
     };
     http.Response response = await http.post(
       Uri.parse("${config.host}${config.regist}"),
@@ -161,6 +161,7 @@ class _HttpService implements HttpService {
           "${config.host}${config.report}?populate=*&sort[0]=createdAt%3Adesc&pagination[page]=${page.toString()}&pagination[pageSize]=${reportConfig.pageSize}&filters[IsVisible][\$eq]=true"),
     );
     Map res = jsonDecode(response.body);
+    print(res);
     return res;
   }
 

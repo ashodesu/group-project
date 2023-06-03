@@ -138,7 +138,31 @@ class User extends StatelessWidget {
             );
           }
           if (state is GetInfoFailed || state is LogoutSuccess) {
-            return Login(mode: true, userBloc: bloc);
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "You Havn't Login!",
+                  style: TextStyle(fontFamily: fontStyle, fontSize: 24),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SquareButton(
+                      onPressed: () {
+                        context.go('/login');
+                      },
+                      height: screenHeight * 0.04,
+                      width: screenWidth * 0.07,
+                      child: Text(
+                        'Go Login',
+                        style: TextStyle(fontFamily: fontStyle),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            );
           }
           if (state is ShowMyRecord) {
             return MyRecord(bloc: bloc, info: info);

@@ -16,3 +16,8 @@ class DatabaseConfig {
 class ReportConfig {
   int pageSize = 20;
 }
+
+class SecConfig {
+  String key = "3t6w9z\$C&F)J@NcRfUjXnZr4u7x!A%D*";
+  int iv = 16;
+}

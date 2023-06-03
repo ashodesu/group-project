@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:asm/app/core/method.dart';
 import 'package:asm/app/core/obj/user_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -16,21 +17,25 @@ class _StorageService implements StorageService {
   @override
   FutureOr saveToken(String key) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("jwt", key);
+    String ekey = encryptAES((key));
+    pref.setString("jwt", ekey);
+    print(await pref.getString('jwt'));
   }
 
   @override
   FutureOr getToken() async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
-      String? key = pref.getString('jwt');
-      if (key != null) {
+
+      String? ekey = pref.getString('jwt');
+      if (ekey != null) {
+        String key = decryptAES(ekey);
         return key;
       } else {
         return null;
       }
     } catch (e) {
-      print(e);
+      print("Error: $e");
       return null;
     }
   }

@@ -30,6 +30,10 @@ class RegistPage extends StatelessWidget {
                   }
                   if (state is RegistSuccess) {
                     showSuccessDialog(context);
+                    Future.delayed(Duration(seconds: 3), () {
+                      context.pop();
+                      context.pop();
+                    });
                   }
                 },
                 builder: (context, state) {
@@ -80,7 +84,6 @@ class RegistPage extends StatelessWidget {
                                   onSaved: (value) {
                                     info.email = value;
                                   },
-                                  hideText: true,
                                   autocorrect: false,
                                   validate: (value) {
                                     if (value == null || value == "") {
@@ -99,7 +102,6 @@ class RegistPage extends StatelessWidget {
                                       info.firstName = value;
                                     }
                                   },
-                                  hideText: true,
                                   autocorrect: false,
                                   validate: (value) {},
                                 ),
@@ -113,7 +115,6 @@ class RegistPage extends StatelessWidget {
                                       info.lastName = value;
                                     }
                                   },
-                                  hideText: true,
                                   autocorrect: false,
                                   validate: (value) {},
                                 ),
@@ -127,7 +128,6 @@ class RegistPage extends StatelessWidget {
                                       info.birthday = value;
                                     }
                                   },
-                                  hideText: true,
                                   autocorrect: false,
                                   validate: (value) {},
                                 ),
@@ -199,10 +199,6 @@ class RegistPage extends StatelessWidget {
   }
 
   showSuccessDialog(BuildContext context) {
-    Future.delayed(Duration(seconds: 3), () {
-      context.go('/home');
-    });
-
     AlertDialog alert = AlertDialog(
       title: Text(
         "Success",
